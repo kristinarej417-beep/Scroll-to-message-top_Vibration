@@ -11,3 +11,6 @@ eventSource.on(event_types.CHARACTER_MESSAGE_RENDERED, (id) => {
     });
   }, 100);
 });
+eventSource.on(event_types.CHARACTER_MESSAGE_RENDERED, () => {
+  navigator.vibrate?.([200, 100, 200]);
+});
