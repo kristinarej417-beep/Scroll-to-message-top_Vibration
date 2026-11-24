@@ -1,0 +1,6 @@
+{
+  "display_name": "Scroll to message top",
+  "js": "index.js",
+  "author": "me",
+  "version": "1.0.0"
+}
