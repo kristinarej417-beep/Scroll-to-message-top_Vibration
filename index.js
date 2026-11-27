@@ -73,3 +73,25 @@ jQuery(() => {
   });
   $('#stt_test').on('click', () => navigator.vibrate?.(s.duration));
 });
+
+// При открытии чата показываем последнее сообщение, а не начало загруженной части
+let chatTouched = false;
+['touchstart', 'wheel'].forEach(t =>
+  document.addEventListener(t, e => {
+    if (e.target.closest?.('#chat')) chatTouched = true;
+  }, { capture: true, passive: true }));
+
+eventSource.on(event_types.CHAT_CHANGED, () => {
+  chatTouched = false;
+  const jump = () => {
+    const s = getSettings();
+    if (!s.scroll || chatTouched) return;
+    const chat = document.getElementById('chat');
+    const all = chat?.querySelectorAll('.mes');
+    const last = all?.[all.length - 1];
+    if (!last) return;
+    chat.scrollTo({ top: last.offsetTop - chat.offsetTop - s.offset });
+  };
+  setTimeout(jump, 150);
+  setTimeout(jump, 700);
+});
